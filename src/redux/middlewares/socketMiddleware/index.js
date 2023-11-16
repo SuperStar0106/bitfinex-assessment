@@ -28,15 +28,16 @@ export const socketMiddleware = (socket) => {
 
         socket.onmessage = (e) => {
           const data = JSON.parse(e.data);
-          console.log('onmessage data: ', data);
-          if (data.chanId) {
-            dispatch(AppActions.book.setChanId(data.chanId))
+          const { event, chanId } = data;
+          console.log('data: ', data);
+          if (event === 'subscribed') {
+            if (data.chanId) {
+              dispatch(AppActions.book.setChanId(chanId))
+            }
+          } else {
+            if (Array.isArray(data))
+              dispatch(AppActions.book.setBooks(data));
           }
-          const channel = data[0];
-          if (data && Array.isArray(data[1])) {
-            dispatch(AppActions.book.setChannel(channel));
-            dispatch(AppActions.book.setBooks(data[1]));
-          };
         }
         break;
       }

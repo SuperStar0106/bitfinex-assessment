@@ -21,8 +21,19 @@ const bookSlice = createSlice({
       state.channel = action.payload;
     },
     setBooks(state, action) {
-      console.log('books in slice: ', action.payload);
-      state.books = { ...action.payload };
+      const [chanId, books] = action.payload;
+      if (chanId === state.chanId && Array.isArray(books)) {
+        const booksData = books.reverse().reduce((acc, el) => {
+          const [price, count, amount] = el;
+          acc[price] = {
+            price,
+            count,
+            amount,
+          };
+          return { ...acc };
+        }, {...state.books});
+        state.books = { ...booksData };
+      }
     }
   }
 });

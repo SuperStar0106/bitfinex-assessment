@@ -1,20 +1,20 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppActions } from "../../redux/store";
 import { MainView } from "../../components/view";
 
 export const MainContainer = () => {
   const dispatch = useDispatch();
+  const { books } = useSelector(root => root.book);
 
   useEffect(() => {
     dispatch(AppActions.book.subscribe({
       channel: 'book',
       symbol: 'tBTCUSD',
       prec: 'P0',
-      freq: 'F1',
-      len: '25'
+      freq: 'F0',
     }));
   }, []);
 
-  return <MainView />
+  return <MainView books={books} />
 };
