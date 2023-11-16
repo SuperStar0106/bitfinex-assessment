@@ -6,7 +6,6 @@ export const socketMiddleware = (socket) => {
     const { type } = action
 
     switch (type) {
-      // Connect to the socket when a user logs in
       case AppActions.book.subscribe.type: {
         const { channel, symbol, prec, freq, len, subId } = action.payload;
         console.log('message ');

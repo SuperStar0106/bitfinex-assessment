@@ -5,16 +5,26 @@ import { MainView } from "../../components/view";
 
 export const MainContainer = () => {
   const dispatch = useDispatch();
-  const { books } = useSelector(root => root.book);
+  const { books, chanId } = useSelector(root => root.book);
 
-  useEffect(() => {
+  const handleConnect = () => {
     dispatch(AppActions.book.subscribe({
       channel: 'book',
       symbol: 'tBTCUSD',
       prec: 'P0',
       freq: 'F0',
     }));
+  }
+
+  const handleDisconnect = () => {
+    dispatch(AppActions.book.unsubscribe({
+      chanId: chanId,
+    }));
+  }
+
+  useEffect(() => {
+    handleConnect();
   }, []);
 
-  return <MainView books={books} />
+  return <MainView books={books} handleConnect={handleConnect} handleDisconnect={handleDisconnect} />
 };

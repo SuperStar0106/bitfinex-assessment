@@ -1,30 +1,36 @@
-import { TableStyle, DivStyle } from "./index.style";
+import { BackgroundStyle, TableStyle, ThStyle, TdStyle, ButtonStyle } from "./index.style";
 
 export const MainView = (props) => {
-  const { books } = props;
+  const { books, handleConnect, handleDisconnect } = props;
   return (
-    <TableStyle>
-      <thead>
-        <td>COUNT</td>
-        <td>AMOUNT</td>
-        <td>PRICE</td>
-      </thead>
-      <tbody>
-        {
-          books && Object.entries(books).map(([key, el]) => (
-            <>
-              {
-                el.count > 0 &&
-                <tr key={key}>
-                  <td>{el.price}</td>
-                  <td>{el.count}</td>
-                  <td>{el.amount}</td>
-                </tr>
-              }
-            </>
-          ))
-        }
-      </tbody>
-    </TableStyle>
+    <BackgroundStyle>
+      <div style={{paddingTop: '20px'}}>
+        <ButtonStyle onClick={handleConnect}>Connect</ButtonStyle>
+        <ButtonStyle onClick={handleDisconnect}>Disconnect</ButtonStyle>
+      </div>
+      <TableStyle>
+        <thead>
+          <ThStyle>COUNT</ThStyle>
+          <ThStyle>AMOUNT</ThStyle>
+          <ThStyle>PRICE</ThStyle>
+        </thead>
+        <tbody>
+          {
+            books && Object.entries(books).map(([key, el]) => (
+              <>
+                {
+                  el.count > 0 &&
+                  <tr key={key}>
+                    <TdStyle>{el.price}</TdStyle>
+                    <TdStyle>{el.count}</TdStyle>
+                    <TdStyle>{el.amount}</TdStyle>
+                  </tr>
+                }
+              </>
+            ))
+          }
+        </tbody>
+      </TableStyle>
+    </BackgroundStyle>
   );
 };
